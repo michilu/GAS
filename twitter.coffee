@@ -1,7 +1,8 @@
-tweetInitialize = (name) ->
-  # Setup OAuthServiceConfig
-  consumerKey = ScriptProperties.getProperty "twitterConsumerKey_#{name}"
-  consumerSecret = ScriptProperties.getProperty "twitterConsumerSecret_#{name}"
+tweetInitialize = (name, consumerKey, consumerSecret) ->
+  unless consumerKey
+    consumerKey = ScriptProperties.getProperty "twitterConsumerKey_#{name}"
+  unless consumerSecret
+    consumerSecret = ScriptProperties.getProperty "twitterConsumerSecret_#{name}"
   oAuthConfig = UrlFetchApp.addOAuthService "twitter"
   oAuthConfig.setAccessTokenUrl "http://api.twitter.com/oauth/access_token"
   oAuthConfig.setRequestTokenUrl "http://api.twitter.com/oauth/request_token"
@@ -48,7 +49,7 @@ getData = (sheetName, rowNames...) ->
   result
 
 forceStatusesUpdate = (args...) ->
-  tweetInitialize args[0]
+  tweetInitialize args[0], args[1], args[2]
   for i in [0, 1, 2]
     try
       data = getData(args...)

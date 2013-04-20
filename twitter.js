@@ -2,11 +2,15 @@
 var NumberOfCharacters, forceStatusesUpdate, getData, statusesUpdate, toQueryString, tweetInitialize,
   __slice = [].slice;
 
-tweetInitialize = function(name) {
-  var consumerKey, consumerSecret, oAuthConfig;
+tweetInitialize = function(name, consumerKey, consumerSecret) {
+  var oAuthConfig;
 
-  consumerKey = ScriptProperties.getProperty("twitterConsumerKey_" + name);
-  consumerSecret = ScriptProperties.getProperty("twitterConsumerSecret_" + name);
+  if (!consumerKey) {
+    consumerKey = ScriptProperties.getProperty("twitterConsumerKey_" + name);
+  }
+  if (!consumerSecret) {
+    consumerSecret = ScriptProperties.getProperty("twitterConsumerSecret_" + name);
+  }
   oAuthConfig = UrlFetchApp.addOAuthService("twitter");
   oAuthConfig.setAccessTokenUrl("http://api.twitter.com/oauth/access_token");
   oAuthConfig.setRequestTokenUrl("http://api.twitter.com/oauth/request_token");
@@ -76,7 +80,7 @@ forceStatusesUpdate = function() {
   var args, data, error, i, _i, _len, _ref;
 
   args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
-  tweetInitialize(args[0]);
+  tweetInitialize(args[0], args[1], args[2]);
   _ref = [0, 1, 2];
   for (_i = 0, _len = _ref.length; _i < _len; _i++) {
     i = _ref[_i];
