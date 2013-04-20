@@ -1,0 +1,9 @@
+syntax: glob
+
+*.so
+*.sw?
+.DS_Store
+node_modules
+tags
+
+syntax: regexp

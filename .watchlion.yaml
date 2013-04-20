@@ -1,0 +1,3 @@
+build:
+  coffee: make
+loglevel: info

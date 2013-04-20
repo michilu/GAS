@@ -1,0 +1,14 @@
+BIN_COFFEE=node_modules/.bin/coffee
+
+.SUFFIXES: .coffee .js
+.coffee.js:
+	$(BIN_COFFEE) -b -c $<
+COFFEE = $(wildcard *.coffee)
+JS = $(COFFEE:.coffee=.js)
+
+all: $(JS)
+
+clean:
+	find ./ -name .DS_Store -delete
+
+.PHONY: all clean
