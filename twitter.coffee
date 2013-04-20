@@ -4,11 +4,11 @@ function NumberOfCharacters(text) {
 }
 `
 
-tweetInitialize = (name, consumerKey, consumerSecret) ->
+tweetInitialize = (consumerKey, consumerSecret) ->
   unless consumerKey
-    consumerKey = ScriptProperties.getProperty "twitterConsumerKey_#{name}"
+    consumerKey = ScriptProperties.getProperty "twitterConsumerKey"
   unless consumerSecret
-    consumerSecret = ScriptProperties.getProperty "twitterConsumerSecret_#{name}"
+    consumerSecret = ScriptProperties.getProperty "twitterConsumerSecret"
   oAuthConfig = UrlFetchApp.addOAuthService "twitter"
   oAuthConfig.setAccessTokenUrl "http://api.twitter.com/oauth/access_token"
   oAuthConfig.setRequestTokenUrl "http://api.twitter.com/oauth/request_token"
@@ -53,9 +53,8 @@ getData = (sheetName, rowNames...) ->
   Logger.log rows
   result
 
-forceStatusesUpdate = (name, consumerKey, consumerSecret, args...) ->
-  tweetInitialize name, consumerKey, consumerSecret
-  args.unshift name
+forceStatusesUpdate = (consumerKey, consumerSecret, args...) ->
+  tweetInitialize consumerKey, consumerSecret
   for i in [0, 1, 2]
     try
       data = getData(args...)
